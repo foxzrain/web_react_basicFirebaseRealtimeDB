@@ -28,7 +28,7 @@ class App extends React.Component {
   }
 
   componentDidUpdate(prevState) {
-    if (prevState !== this.state) {
+    if (prevState !== this.state.requests) {
       this.writeUserData();
     }
   }
@@ -37,7 +37,7 @@ class App extends React.Component {
     // Initialize Realtime Database and get a reference to the service
     firebase.database()
       .ref("/")
-      .update(this.state);
+      .update(this.state.requests);
     console.log("DATA SAVED");
   };
 
@@ -46,7 +46,7 @@ class App extends React.Component {
     let ref = firebase.database().ref("/");
     ref.on("value", snapshot => {
       const state = snapshot.val();
-      this.setState(state);
+      this.setState({requests: state, open: false, id: ''});
     });
   };
 
